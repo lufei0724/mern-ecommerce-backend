@@ -1,0 +1,31 @@
+{
+  "name": "mern-ecommerce-backend",
+  "version": "1.0.0",
+  "description": "Backend of ecommerce project using MERN stack",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecommerce",
+    "mern",
+    "javascript",
+    "nodejs",
+    "mongodb",
+    "rest",
+    "api"
+  ],
+  "author": "Lufei",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.9.2",
+    "mongoose": "^5.11.16"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
