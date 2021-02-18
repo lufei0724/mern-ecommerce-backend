@@ -1,9 +1,20 @@
 const express = require("express");
 const userRouter = express.Router();
-const { signup } = require("../controllers/auth");
+const {
+  signUp,
+  signIn,
+  adminSignUp,
+  verifyToken,
+} = require("../controllers/auth");
 
-userRouter.post("/signin", (req, res) => {});
+userRouter.post("/signin", signIn);
 
-userRouter.post("/signup", signup);
+userRouter.post("/signup", signUp);
+
+userRouter.post("/admin/signup", adminSignUp);
+
+userRouter.get("/profile", verifyToken, (req, res) => {
+  res.status(200).json({ message: "User profile" });
+});
 
 module.exports = userRouter;
