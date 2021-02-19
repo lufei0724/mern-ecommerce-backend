@@ -25,8 +25,22 @@ const errorHandler = (err, req, res, next) => {
   next(err);
 };
 
+const verifySignIn = async (req, res, next) => {
+  if (req.headers.authorization) {
+    const token = req.headers.authorization.split(" ")[1];
+    try {
+      const decoded = await jwt.verify(token, config.JWT_SECRET);
+      req.userToken = decoded;
+    } catch (error) {
+      next(error);
+    }
+  }
+  next();
+};
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
+  verifySignIn,
 };

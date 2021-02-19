@@ -4,7 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
-const usersRouter = require("./routes/user");
+const authRouter = require("./routes/auth");
 
 const app = express();
 
@@ -24,7 +24,8 @@ mongoose
 
 app.use(express.json());
 app.use(middleware.requestLogger);
-app.use("/api", usersRouter);
+app.use("/api", authRouter);
+app.use(middleware.verifySignIn);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
