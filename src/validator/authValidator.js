@@ -11,7 +11,7 @@ const isEmailFound = async (email) => {
 };
 
 const validateSignUp = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username = "", email = "", password = "" } = req.body;
 
   try {
     if (validator.isEmpty(username)) throw new Error("Name is required.");

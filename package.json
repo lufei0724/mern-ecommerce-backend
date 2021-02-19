@@ -4,8 +4,8 @@
   "description": "Backend of ecommerce project using MERN stack",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/index.js",
-    "dev": "NODE_ENV=development nodemon src/index.js",
+    "start": "SET NODE_ENV=production&&node src/index.js",
+    "dev": "SET NODE_ENV=development&&nodemon src/index.js",
     "test": "SET NODE_ENV=test&&jest --testEnvironment=node --verbose --runInBand"
   },
   "keywords": [

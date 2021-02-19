@@ -3,7 +3,6 @@ const supertest = require("supertest");
 const app = require("../app");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-const { TestScheduler } = require("jest");
 
 const api = supertest(app);
 
