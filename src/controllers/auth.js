@@ -3,29 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../utils/config");
 
-const validateSignUp = async (data, next) => {
-  const { email, password } = data;
-
-  if (email.length === 0) {
-    throw new Error("Email is required.");
-  }
-
-  if (password.length === 0) {
-    throw new Error("Password is required.");
-  }
-
-  try {
-    const user = await User.findOne({
-      email: email,
-    });
-    if (user) {
-      throw new Error("Email already exists.");
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
 const generateHashPassword = async (password, next) => {
   try {
     const saltRounds = 10;
@@ -37,13 +14,14 @@ const generateHashPassword = async (password, next) => {
 
 const signUp = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    await validateSignUp({ email, password }, next);
+    const { password } = req.body;
     const hashPassword = await generateHashPassword(password, next);
+
     const newUser = new User({
       ...req.body,
       hashPassword,
     });
+
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);
   } catch (error) {
@@ -70,9 +48,8 @@ const signIn = async (req, res, next) => {
       return res.status(401).json({ message: "Password is not correct." });
     }
 
-    const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
-      expiresIn: "2h",
-    });
+    const token = await genToken(user, next);
+
     const { firstName, lastName, username, email, role } = user;
     res.status(200).json({
       token,
@@ -92,15 +69,26 @@ const signIn = async (req, res, next) => {
 const adminSignUp = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    await validateSignUp({ email, password }, next);
     const hashPassword = await generateHashPassword(password, next);
+
     const newUser = new User({
       ...req.body,
       hashPassword,
       role: "admin",
     });
+
     const savedUser = await newUser.save();
     res.status(200).json(savedUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const genToken = async (user, next) => {
+  try {
+    return await jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "2h",
+    });
   } catch (error) {
     next(error);
   }
