@@ -29,27 +29,10 @@ const signUp = async (req, res, next) => {
   }
 };
 
-const authenticate = async (password, hashPassword) => {
-  return await bcrypt.compare(password, hashPassword);
-};
-
 const signIn = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      return res.status(404).json({ message: "User doesn't exist." });
-    }
-
-    const correctPassword = await authenticate(
-      req.body.password,
-      user.hashPassword
-    );
-    if (!correctPassword) {
-      return res.status(401).json({ message: "Password is not correct." });
-    }
-
     const token = await genToken(user, next);
-
     const { firstName, lastName, username, email, role } = user;
     res.status(200).json({
       token,

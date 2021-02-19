@@ -7,9 +7,12 @@ const {
   verifyToken,
 } = require("../controllers/auth");
 
-const { validateSignUp } = require("../validator/authValidator");
+const {
+  validateSignUp,
+  validateSignIn,
+} = require("../validator/authValidator");
 
-userRouter.post("/signin", signIn);
+userRouter.post("/signin", validateSignIn, signIn);
 
 userRouter.post("/signup", validateSignUp, signUp);
 
