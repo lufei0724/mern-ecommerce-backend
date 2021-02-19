@@ -43,17 +43,15 @@ const authenticate = async (email, password) => {
 };
 
 const validateSignIn = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email = "", password = "" } = req.body;
 
   try {
     if (validator.isEmpty(email)) throw new Error("Email is required.");
 
-    if (!validator.isEmail(email)) throw new Error("Email is invalid.");
-
-    if (validator.isEmpty(password)) throw new Error("Password is required.");
-
     const emailFound = await isEmailFound(email);
     if (!emailFound) throw new Error("Email is not found.");
+
+    if (validator.isEmpty(password)) throw new Error("Password is required.");
 
     const correctPassword = await authenticate(email, password);
     if (!correctPassword) throw new Error("Password is not correct.");
