@@ -26,7 +26,7 @@ describe("when there is initially one user in DB", () => {
     };
 
     await api
-      .post("/api/signin")
+      .post("/api/auth/signin")
       .send(loginUser)
       .expect(400, { error: "Email is required." });
   });
@@ -38,7 +38,7 @@ describe("when there is initially one user in DB", () => {
     };
 
     await api
-      .post("/api/signin")
+      .post("/api/auth/signin")
       .send(loginUser)
       .expect(400, { error: "Email is not found." });
   });
@@ -49,7 +49,7 @@ describe("when there is initially one user in DB", () => {
     };
 
     await api
-      .post("/api/signin")
+      .post("/api/auth/signin")
       .send(loginUser)
       .expect(400, { error: "Password is required." });
   });
@@ -61,7 +61,7 @@ describe("when there is initially one user in DB", () => {
     };
 
     await api
-      .post("/api/signin")
+      .post("/api/auth/signin")
       .send(loginUser)
       .expect(400, { error: "Password is not correct." });
   });
@@ -73,7 +73,7 @@ describe("when there is initially one user in DB", () => {
     };
 
     await api
-      .post("/api/signin")
+      .post("/api/auth/signin")
       .send(loginUser)
       .expect(200)
       .expect((res) => {

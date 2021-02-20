@@ -18,7 +18,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(user)
       .expect(400, { error: "Name is required." });
   });
@@ -30,7 +30,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(user)
       .expect(400, { error: "Email is required." });
   });
@@ -43,7 +43,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(user)
       .expect(400, { error: "Email is invalid." });
   });
@@ -55,7 +55,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(user)
       .expect(400, { error: "Password is required." });
   });
@@ -77,7 +77,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(signupUser)
       .expect(400, { error: "Email is already in use." });
   });
@@ -90,7 +90,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(user)
       .expect(400, { error: "Password must be at least 6 characters." });
   });
@@ -103,7 +103,7 @@ describe("Admin signup", () => {
     };
 
     await api
-      .post("/api/admin/signup")
+      .post("/api/auth/admin/signup")
       .send(user)
       .expect(200)
       .expect((res) => {

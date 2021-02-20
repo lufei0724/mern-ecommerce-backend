@@ -25,8 +25,8 @@ mongoose
 
 app.use(express.json());
 app.use(middleware.requestLogger);
-app.use("/api", authRouter);
-app.use("/api", categoryRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/category", categoryRouter);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
