@@ -48,4 +48,13 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+userSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+    delete returnedObject.hashPassword;
+  },
+});
+
 module.exports = mongoose.model("User", userSchema);

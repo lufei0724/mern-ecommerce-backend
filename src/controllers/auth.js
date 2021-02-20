@@ -67,7 +67,7 @@ const adminSignUp = async (req, res, next) => {
 
 const genToken = async (user, next) => {
   try {
-    return await jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    return await jwt.sign({ id: user.id }, config.JWT_SECRET, {
       expiresIn: "2h",
     });
   } catch (error) {
