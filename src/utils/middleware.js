@@ -45,7 +45,34 @@ const verifySignIn = async (req, res, next) => {
     if (!decodedToken || !decodedToken.id) {
       return res.status(401).json({ error: "Access denied." });
     }
-    req.userId = decodedToken;
+    req.user = {
+      id: decodedToken.id,
+      role: decodedToken.role,
+    };
+  } catch (error) {
+    next(error);
+  }
+  next();
+};
+
+const adminRoleRequired = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (user.role !== "admin") {
+      return res.status(401).json({ error: "Access denied." });
+    }
+  } catch (error) {
+    next(error);
+  }
+  next();
+};
+
+const userRoleRequired = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (user.role !== "user") {
+      return res.status(401).json({ error: "Access denied." });
+    }
   } catch (error) {
     next(error);
   }
@@ -57,4 +84,6 @@ module.exports = {
   unknownEndpoint,
   errorHandler,
   verifySignIn,
+  adminRoleRequired,
+  userRoleRequired,
 };

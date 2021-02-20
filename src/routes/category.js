@@ -1,5 +1,5 @@
 const categoryRouter = require("express").Router();
-const middleware = require("../utils/middleware");
+const { verifySignIn, adminRoleRequired } = require("../utils/middleware");
 const {
   initCategory,
   addCategory,
@@ -8,7 +8,7 @@ const {
 
 categoryRouter.post("/init", initCategory);
 
-categoryRouter.post("/add", middleware.verifySignIn, addCategory);
+categoryRouter.post("/add", verifySignIn, adminRoleRequired, addCategory);
 
 categoryRouter.get("/list", getCategoryList);
 

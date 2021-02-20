@@ -67,20 +67,9 @@ const adminSignUp = async (req, res, next) => {
 
 const genToken = async (user, next) => {
   try {
-    return await jwt.sign({ id: user.id }, config.JWT_SECRET, {
+    return await jwt.sign({ id: user.id, role: user.role }, config.JWT_SECRET, {
       expiresIn: "2h",
     });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const verifyToken = async (req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1];
-  try {
-    const decoded = await jwt.verify(token, config.JWT_SECRET);
-    req.userToken = decoded;
-    next();
   } catch (error) {
     next(error);
   }
@@ -90,5 +79,4 @@ module.exports = {
   signUp,
   signIn,
   adminSignUp,
-  verifyToken,
 };
