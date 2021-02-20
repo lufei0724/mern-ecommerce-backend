@@ -1,6 +1,7 @@
 const categoryRouter = require("express").Router();
 const Category = require("../models/category");
 const slugify = require("slugify");
+const middleware = require("../utils/middleware");
 
 categoryRouter.post("/init-category", async (req, res, next) => {
   const addCategory = async (category, parentId = "") => {
@@ -70,20 +71,24 @@ categoryRouter.post("/init-category", async (req, res, next) => {
   }
 });
 
-categoryRouter.post("/add-category", async (req, res, next) => {
-  try {
-    const { name, parentId = "" } = req.body;
-    const category = new Category({
-      name,
-      slug: slugify(name, { lower: true }),
-      parentId,
-    });
-    const savedCategory = await category.save();
-    res.status(200).json(savedCategory);
-  } catch (error) {
-    next(error);
+categoryRouter.post(
+  "/add-category",
+  middleware.verifySignIn,
+  async (req, res, next) => {
+    try {
+      const { name, parentId = "" } = req.body;
+      const category = new Category({
+        name,
+        slug: slugify(name, { lower: true }),
+        parentId,
+      });
+      const savedCategory = await category.save();
+      res.status(200).json(savedCategory);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 const createCategoryList = (categories, parentId = "") => {
   const categoryList = [];
