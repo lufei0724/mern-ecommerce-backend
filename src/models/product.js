@@ -44,4 +44,17 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+productSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    returnedObject.productImages.map((i) => {
+      i.id = i._id.toString();
+      delete i._id;
+      return i;
+    });
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
 module.exports = mongoose.model("Product", productSchema);

@@ -25,6 +25,20 @@ const addProduct = async (req, res, next) => {
   }
 };
 
+const getProducts = async (req, res, next) => {
+  try {
+    const products = await productSchema
+      .find({})
+      .populate({ path: "category", select: "name" })
+      .populate({ path: "createdBy", select: "username" })
+      .populate({ path: "updatedBy", select: "username" });
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   addProduct,
+  getProducts,
 };
