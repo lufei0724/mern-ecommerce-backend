@@ -1,7 +1,7 @@
 const logger = require("./logger");
 const jwt = require("jsonwebtoken");
 const config = require("./config");
-const { response } = require("../app");
+const multer = require("multer");
 
 const requestLogger = (req, res, next) => {
   logger.info("Method:", req.method);
@@ -20,7 +20,7 @@ const errorHandler = (error, req, res, next) => {
   if (error.name === "CastError") {
     return res.status(400).json({ error: "malformatted id" });
   } else if (error.name === "ValidationError") {
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: error.message });
   } else if (error.name === "JsonWebTokenError") {
     return res.status(401).json({ error: "invalid token" });
   }
@@ -79,6 +79,19 @@ const userRoleRequired = async (req, res, next) => {
   next();
 };
 
+const uploadFiles = (req, res, next) => {
+  const upload = multer({ dest: config.UPLOAD_DIR }).any();
+  upload(req, res, (error) => {
+    if (error instanceof multer.MulterError) {
+      return res.status(400).json({ error: "Failed to upload files" });
+    } else if (error) {
+      next(error);
+      return;
+    }
+    next();
+  });
+};
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
@@ -86,4 +99,5 @@ module.exports = {
   verifySignIn,
   adminRoleRequired,
   userRoleRequired,
+  uploadFiles,
 };

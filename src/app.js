@@ -6,6 +6,7 @@ const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 const authRouter = require("./routes/auth");
 const categoryRouter = require("./routes/category");
+const productRouter = require("./routes/product");
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 app.use("/api/auth", authRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/product", productRouter);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 

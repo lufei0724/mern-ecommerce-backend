@@ -1,4 +1,6 @@
 const env = require("dotenv");
+const fsPromise = require("fs/promises");
+const path = require("path");
 
 env.config();
 
@@ -11,8 +13,18 @@ if (process.env.NODE_ENV === "test") {
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+const UPLOAD_DIR = path.join(__dirname, "../..", "uploads");
+(async () => {
+  try {
+    await fsPromise.stat(UPLOAD_DIR);
+  } catch (error) {
+    fsPromise.mkdir(UPLOAD_DIR);
+  }
+})();
+
 module.exports = {
   PORT,
   DB_URL,
   JWT_SECRET,
+  UPLOAD_DIR,
 };
