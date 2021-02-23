@@ -8,6 +8,9 @@ const authRouter = require("./routes/auth");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
 const cartRouter = require("./routes/cart");
+const { static } = require("express");
+const initRouter = require("./routes/init");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -27,10 +30,14 @@ mongoose
 
 app.use(express.json());
 app.use(middleware.requestLogger);
+app.use("/api/init", initRouter);
+app.use("/api/public", static(config.UPLOAD_DIR));
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
 app.use("/api/user/cart", cartRouter);
+//app.use("/public", publicRouter);
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
