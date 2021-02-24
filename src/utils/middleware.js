@@ -79,18 +79,16 @@ const userRoleRequired = async (req, res, next) => {
   next();
 };
 
-const uploadFiles = (req, res, next) => {
-  const upload = multer({ dest: config.UPLOAD_DIR }).any();
-  upload(req, res, (error) => {
-    if (error instanceof multer.MulterError) {
-      return res.status(400).json({ error: "Failed to upload files" });
-    } else if (error) {
-      next(error);
-      return;
-    }
-    next();
-  });
-};
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, config.UPLOAD_DIR);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 module.exports = {
   requestLogger,
@@ -99,5 +97,5 @@ module.exports = {
   verifySignIn,
   adminRoleRequired,
   userRoleRequired,
-  uploadFiles,
+  upload,
 };

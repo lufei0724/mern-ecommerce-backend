@@ -1,4 +1,4 @@
-const productSchema = require("../models/product");
+const Product = require("../models/product");
 const slugify = require("slugify");
 
 const addProduct = async (req, res, next) => {
@@ -7,7 +7,7 @@ const addProduct = async (req, res, next) => {
     console.log(files);
     const { name, description, price, category } = req.body;
 
-    const product = new productSchema({
+    const product = new Product({
       name: name,
       slug: slugify(name, { lowercase: true }),
       description: description,
@@ -27,8 +27,7 @@ const addProduct = async (req, res, next) => {
 
 const getProducts = async (req, res, next) => {
   try {
-    const products = await productSchema
-      .find({})
+    const products = await Product.find({})
       .populate({ path: "category", select: "name" })
       .populate({ path: "createdBy", select: "username" })
       .populate({ path: "updatedBy", select: "username" });

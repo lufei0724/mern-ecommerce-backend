@@ -11,6 +11,7 @@ const cartRouter = require("./routes/cart");
 const { static } = require("express");
 const initRouter = require("./routes/init");
 const userRouter = require("./routes/user");
+const brandRouter = require("./routes/brand");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/public", static(config.UPLOAD_DIR));
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/brand", brandRouter);
 app.use("/api/product", productRouter);
 app.use("/api/user/cart", cartRouter);
 //app.use("/public", publicRouter);

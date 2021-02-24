@@ -24,7 +24,13 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: mongoose.ObjectId,
-      ref: "Category",
+      get: (v) => v.toString(),
+      ref: "category",
+    },
+    brand: {
+      type: mongoose.ObjectId,
+      get: (v) => v.toString(),
+      ref: "brand",
     },
     productImages: [
       {
@@ -37,8 +43,16 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    createdBy: { type: mongoose.ObjectId, ref: "User" },
-    updatedBy: { type: mongoose.ObjectId, ref: "User" },
+    createdBy: {
+      type: mongoose.ObjectId,
+      get: (v) => v.toString(),
+      ref: "user",
+    },
+    updatedBy: {
+      type: mongoose.ObjectId,
+      get: (v) => v.toString(),
+      ref: "user",
+    },
   },
   { timestamps: true }
 );
@@ -56,4 +70,4 @@ productSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("product", productSchema);

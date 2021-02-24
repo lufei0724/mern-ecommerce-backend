@@ -1,26 +1,23 @@
 const mongoose = require("mongoose");
-
-const categorySchema = new mongoose.Schema(
+const brandSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      trim: true,
     },
     slug: {
       type: String,
       required: true,
-      trim: true,
       unique: true,
     },
-    parentId: {
+    brandImage: {
       type: String,
     },
   },
   { timestamps: true }
 );
 
-categorySchema.set("toJSON", {
+brandSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -28,4 +25,4 @@ categorySchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("category", categorySchema);
+module.exports = mongoose.model("brand", brandSchema);

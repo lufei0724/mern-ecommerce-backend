@@ -3,6 +3,7 @@ const slugify = require("slugify");
 
 const addCategory = async (req, res, next) => {
   try {
+    const files = req.files;
     const { name, parentId = "" } = req.body;
     const category = new Category({
       name,

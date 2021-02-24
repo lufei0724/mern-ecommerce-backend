@@ -1,8 +1,13 @@
 const productRouter = require("express").Router();
 const { addProduct, getProducts } = require("../controllers/product");
-const { verifySignIn, uploadFiles } = require("../utils/middleware");
+const { verifySignIn, upload } = require("../utils/middleware");
 
-productRouter.post("/add", verifySignIn, uploadFiles, addProduct);
+productRouter.post(
+  "/add",
+  verifySignIn,
+  upload.array("productImages", 8),
+  addProduct
+);
 
 productRouter.get("/all", getProducts);
 

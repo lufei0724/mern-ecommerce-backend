@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const cart = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
   user: {
     type: mongoose.ObjectId,
     get: (v) => v.toString(),
-    ref: "User",
+    ref: "user",
     required: true,
     unique: true,
   },
@@ -27,7 +27,7 @@ const cart = new mongoose.Schema({
   ],
 });
 
-cart.set("toJSON", {
+cartSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     returnedObject.cartItems.map((i) => {
@@ -40,4 +40,4 @@ cart.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("Cart", cart);
+module.exports = mongoose.model("cart", cartSchema);
