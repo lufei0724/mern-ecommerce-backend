@@ -8,10 +8,10 @@ const authRouter = require("./routes/auth");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
 const cartRouter = require("./routes/cart");
-const { static } = require("express");
 const initRouter = require("./routes/init");
 const userRouter = require("./routes/user");
 const brandRouter = require("./routes/brand");
+const cors = require("cors");
 
 const app = express();
 
@@ -29,10 +29,11 @@ mongoose
     logger.info(`error connecting to DB: ${error.message}`);
   });
 
+app.use(cors());
 app.use(express.json());
 app.use(middleware.requestLogger);
 app.use("/api/init", initRouter);
-app.use("/api/public", static(config.UPLOAD_DIR));
+app.use("/api/public", express.static(config.UPLOAD_DIR));
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);

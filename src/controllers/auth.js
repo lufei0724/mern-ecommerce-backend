@@ -36,11 +36,13 @@ const signIn = async (req, res, next) => {
     const { firstName, lastName, username, email, role } = user;
     res.status(200).json({
       token,
-      firstName,
-      lastName,
-      username,
-      email,
-      role,
+      user: {
+        firstName,
+        lastName,
+        username,
+        email,
+        role,
+      },
     });
   } catch (error) {
     next(error);

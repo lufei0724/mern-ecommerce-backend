@@ -78,7 +78,7 @@ describe("when there is initially one user in DB", () => {
       .expect(200)
       .expect((res) => {
         res.body = {
-          email: res.body.email,
+          email: res.body.user.email,
         };
       })
       .expect({ email: "peterm@gmail.com" });
