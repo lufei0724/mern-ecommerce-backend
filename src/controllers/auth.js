@@ -33,6 +33,7 @@ const signIn = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     const token = await genToken(user, next);
+    console.log(`Generated Token: ${token}`);
     const { firstName, lastName, username, email, role } = user;
     res.status(200).json({
       token,
@@ -51,7 +52,7 @@ const signIn = async (req, res, next) => {
 
 const adminSignUp = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { password } = req.body;
     const hashPassword = await generateHashPassword(password, next);
 
     const newUser = new User({
@@ -61,7 +62,18 @@ const adminSignUp = async (req, res, next) => {
     });
 
     const savedUser = await newUser.save();
-    res.status(200).json(savedUser);
+    const token = await genToken(savedUser, next);
+    const { firstName, lastName, username, email, role } = savedUser;
+    res.status(200).json({
+      token,
+      user: {
+        firstName,
+        lastName,
+        username,
+        email,
+        role,
+      },
+    });
   } catch (error) {
     next(error);
   }

@@ -41,7 +41,24 @@ const getCategoryList = async (req, res, next) => {
   }
 };
 
+const getLeafCategories = async (req, res, next) => {
+  try {
+    const leafCategories = [];
+    const categories = await Category.find({});
+    for (const cate of categories) {
+      const category = await Category.find({ parentId: cate.id });
+      if (category.length === 0) {
+        leafCategories.push(cate);
+      }
+    }
+    res.status(200).json(leafCategories);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   addCategory,
   getCategoryList,
+  getLeafCategories,
 };

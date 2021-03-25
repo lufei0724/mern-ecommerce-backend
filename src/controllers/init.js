@@ -132,7 +132,7 @@ const products = [
     category: "iPhones",
     productImages: [
       {
-        name: "KHIP1164BLK_1",
+        name: "KHIP1164BLK_1.jpg",
       },
     ],
   },
@@ -144,10 +144,10 @@ const products = [
     category: "LED Televisions",
     productImages: [
       {
-        name: "KALED42RF9220STA_1",
+        name: "KALED42RF9220STA_1.jpg",
       },
       {
-        name: "KALED42RF9220STA_2",
+        name: "KALED42RF9220STA_2.jpg",
       },
     ],
   },
@@ -158,9 +158,9 @@ const products = [
     price: 119.99,
     category: "Footwear",
     productImages: [
-      { name: "DOC-2976-R11853001-M-8_1" },
-      { name: "DOC-2976-R11853001-M-8_2" },
-      { name: "DOC-2976-R11853001-M-8_3" },
+      { name: "DOC-2976-R11853001-M-8_1.jpg" },
+      { name: "DOC-2976-R11853001-M-8_2.jpg" },
+      { name: "DOC-2976-R11853001-M-8_3.jpg" },
     ],
   },
 ];

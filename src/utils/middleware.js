@@ -7,6 +7,7 @@ const requestLogger = (req, res, next) => {
   logger.info("Method:", req.method);
   logger.info("Path", req.path);
   logger.info("Params", req.params);
+  logger.info("Headers", req.headers);
   logger.info("Body:", req.body);
   logger.info("---");
   next();

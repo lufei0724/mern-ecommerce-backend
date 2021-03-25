@@ -31,6 +31,7 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(middleware.requestLogger);
 app.use("/api/init", initRouter);
 app.use("/api/public", express.static(config.UPLOAD_DIR));
