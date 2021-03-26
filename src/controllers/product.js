@@ -16,7 +16,12 @@ const addProduct = async (req, res, next) => {
       createdBy: req.user.id,
       updatedBy: req.user.id,
       productImages:
-        files && files.map((f) => ({ name: f.originalname, path: f.path })),
+        files &&
+        files.map((f) => ({
+          name: f.filename,
+          originalName: f.originalname,
+          path: f.path,
+        })),
     });
     const savedProduct = await product.save();
     res.status(200).json(savedProduct);
